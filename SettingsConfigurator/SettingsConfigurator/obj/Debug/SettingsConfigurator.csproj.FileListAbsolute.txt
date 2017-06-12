@@ -8,3 +8,13 @@ c:\users\conor.mcgrath\documents\visual studio 2017\Projects\SettingsConfigurato
 c:\users\conor.mcgrath\documents\visual studio 2017\Projects\SettingsConfigurator\SettingsConfigurator\obj\Debug\SettingsConfigurator.csprojResolveAssemblyReference.cache
 c:\users\conor.mcgrath\documents\visual studio 2017\Projects\SettingsConfigurator\SettingsConfigurator\obj\Debug\SettingsConfigurator.exe
 c:\users\conor.mcgrath\documents\visual studio 2017\Projects\SettingsConfigurator\SettingsConfigurator\obj\Debug\SettingsConfigurator.pdb
+C:\Users\conor.mcgrath\Source\Repos\Test-Tools\SettingsConfigurator\SettingsConfigurator\bin\Debug\SettingsConfigurator.exe.config
+C:\Users\conor.mcgrath\Source\Repos\Test-Tools\SettingsConfigurator\SettingsConfigurator\bin\Debug\SettingsConfigurator.exe
+C:\Users\conor.mcgrath\Source\Repos\Test-Tools\SettingsConfigurator\SettingsConfigurator\bin\Debug\SettingsConfigurator.pdb
+C:\Users\conor.mcgrath\Source\Repos\Test-Tools\SettingsConfigurator\SettingsConfigurator\bin\Debug\EntityFramework.dll
+C:\Users\conor.mcgrath\Source\Repos\Test-Tools\SettingsConfigurator\SettingsConfigurator\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\conor.mcgrath\Source\Repos\Test-Tools\SettingsConfigurator\SettingsConfigurator\bin\Debug\EntityFramework.xml
+C:\Users\conor.mcgrath\Source\Repos\Test-Tools\SettingsConfigurator\SettingsConfigurator\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\conor.mcgrath\Source\Repos\Test-Tools\SettingsConfigurator\SettingsConfigurator\obj\Debug\SettingsConfigurator.csprojResolveAssemblyReference.cache
+C:\Users\conor.mcgrath\Source\Repos\Test-Tools\SettingsConfigurator\SettingsConfigurator\obj\Debug\SettingsConfigurator.exe
+C:\Users\conor.mcgrath\Source\Repos\Test-Tools\SettingsConfigurator\SettingsConfigurator\obj\Debug\SettingsConfigurator.pdb

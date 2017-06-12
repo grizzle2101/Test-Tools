@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace SettingsConfigurator
 {
@@ -11,25 +13,36 @@ namespace SettingsConfigurator
     {
         static void Main(string[] args)
         {
-            //Get User Input for Database & Type of Data:
-            Console.WriteLine("Enter Database Number:");
-            var DatabaseNumber = Console.ReadLine();
+            //Display Confingured Connection Strings:
+            Console.WriteLine("--- Encrypt & Submit Settings Generator ---");
 
-            Console.WriteLine("Production(True) or Test Data(False)? ");
-            Boolean TestDataType = bool.Parse(Console.ReadLine());
+            //Task 1 - Retrive Settings from Config
+            var ConfiguredMainDatabase = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["DatabaseContext"].ConnectionString);
+            var ConfiguredSettingsDatabase = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings["SettingsContext"].ConnectionString);
+            Console.WriteLine("---Application:[{0}]  & Target Database:[{1}]---", ConfiguredMainDatabase.InitialCatalog, ConfiguredSettingsDatabase.InitialCatalog);          
 
-            //Task 1 - Retrive Unique Records from View
+            //Task 2 - Lookup UserId using Config
+            var DatabaseContext = new DatabaseContext();
+            var TargetDatabaseId = DatabaseContext.UIDatabases
+                .Where(d => d.Name.Contains(ConfiguredSettingsDatabase.InitialCatalog))
+                .Select(d => new { d.ID, d.Name})
+                .FirstOrDefault();
+
+            var ID = TargetDatabaseId.ID.ToString();
+
+            //Task 3 - Retrive Unique Records from View
+            Console.WriteLine("--- Retreieving Data from View ----");
             var context = new SettingsContext();
             var deliveries = context.UI_vDeliveries
                 .Where(x => x.Regime == "US FATCA" && x.TransmittingCountry != "ES")
-                .Select(x => new { Transmitter = x.B021, Country = x.TransmittingCountry})
+                .Select(x => new { Transmitter = x.B021, Country = x.TransmittingCountry })
                 .Distinct();
 
             foreach (var d in deliveries)
-                Console.WriteLine("{0} {1}", d.Transmitter);
+                Console.WriteLine("{0}", d.Transmitter);
 
-            //Task 2 - Add Records to Encrypt & Submit Settings Table.
-            Console.WriteLine("Retrieved Deliveries from View:");
+            //Task 4 - Create Settings Using Data from View.
+            Console.WriteLine("\n --- Adding Entries to EncryptSubmitSettings ---");
             foreach (var d in deliveries)
             {
                 Console.WriteLine("Adding Settings for - {0}", d.Transmitter);
@@ -37,11 +50,11 @@ namespace SettingsConfigurator
                     .AddOrUpdate(
                     new EncryptSubmitSetting
                     {
-                        DatabaseId = DatabaseNumber, //Point to Database
+                        DatabaseId = ID, //Point to Database
                         Transmitter = d.Transmitter,
                         Country = d.Country,
                         Regime = "US FATCA",
-                        Production = TestDataType, //True = Production Data
+                        Production = true, //True = Production Data
                         ServerName = null,
                         Username = "fitaxidestest", //Can Change Default Values if needed.
                         Password = "N8jJTIPaKXItjhvqbJ8WIIs0G+t/5QqR3/Hs95vXJgs=",
@@ -53,11 +66,10 @@ namespace SettingsConfigurator
                         SFTPUsername = "diarmuid.delaney",
                         SFTPPassword = "V8cBePrI1hA0l88KU2WsZ2arn1CMnpQM0CDEB9byvDo=",
                         MailServerType = "Exchange",
-                        
                     }
                     );
             }
-            context.SaveChangesAsync();
+            context.SaveChanges();
             Console.ReadKey();
         }
     }
